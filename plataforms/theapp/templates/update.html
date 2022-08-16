@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% load static %}
+
+{% block title %} Plataforms Dashboard {% endblock title %}
+
+{% block body %}
+<div class="main">
+<h1>TWITTER FOR SPORTS</h1>
+<div class="user">
+{% for us in usr %}
+    <img src={{ us.profile_image_url }}>
+    <p>{{forloop.counter}} - {{ us.id}} | {{ us.name }} | {{us.username }} {{us.cat}} ACTUALIZADO</p>
+    <div class="tweet">
+        {% for tweet in tweets %}
+            {% if tweet.author_id == us.id %}
+                <p>{{forloop.counter}} - {{ tweet.id }} - {{tweet.author_id}}</p>
+                <p>{{ tweet.created_at }}</p>
+                <p>{{ tweet.context_annotations }}</p>
+                <p>{{ tweet.text }}</p>
+                <p>{{ tweet.public_metrics }}</p>
+                <p>{{ tweet.non_public_metrics }}</p>
+                <p>{{ tweet.attachments }}</p>
+            {% endif %}
+        {%endfor%}
+        </div>
+
+{%endfor%}
+
+</div>
+</div>
+{% endblock body %}

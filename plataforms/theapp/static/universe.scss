@@ -1,0 +1,160 @@
+@import 'general';
+@import 'options';
+
+body{
+    background-color: $Back;
+    margin: 0;
+    font-family: $Main_Font;
+    
+}
+
+.main{
+    display: grid;
+    grid-template-columns: 25% 75%;
+    grid-template-areas: "Nav Details";
+    width: 100vw;
+}
+
+h1{
+    font-family: $Universe_Font;
+    font-size: 40px;
+    color: white;
+    padding-left: 15px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.nav1{
+    grid-area: Nav;
+    background-color: $Nav1;
+
+    & .data{
+        padding-left: 10px;
+        color: #02FFFF;
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        height: 50px;
+        & h3{
+            font-size: 22px;
+            flex-grow: 2;
+            letter-spacing: 2px;
+            padding-left: 10px;
+        }
+        & h4{
+            font-size: 22px;
+            padding: 5px;
+        }
+    }
+    & table{
+        border: none;
+        padding: 20px 10px;
+        color: white;
+        & .tit{
+            width: 120px;
+            font-size: 22px
+        }
+        & .dat{
+            text-align: right;
+            width: 80px;
+            font-size: 22px;
+        }
+        & thead{
+            text-align: center;
+            background-color: $Buttons;
+            color: $Darker;
+        }
+        & .imp{
+            background-color: $Darker;
+            border: 0.5px $Darker;
+        }
+        & td{
+            padding: 10px 5px;
+        }
+    }
+}
+
+
+.top{
+    color: $Thead;
+    & h3{
+        font-size: 40px;
+        padding-left: 10px;
+    }
+}
+
+
+
+.groups{
+    display: flex;
+    top: 80px;
+    flex-direction: row;
+    & .logo{
+        display: grid;
+    }
+
+    & .data{
+        top: 100px;
+        width: 25%;
+    }
+}
+.head{
+    background-color: $Nav1;
+    color: white;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.hide{
+    color: $Darker;
+}
+
+.group {
+    width: 35vw;
+    padding: 10px;
+    & img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    object-fit: contain;
+    max-width: 100%;
+    height: 60px;
+    }
+    & th{
+        background-color: $Darker;
+    }
+
+}
+.der{
+    text-align: right;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.pad{
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.frame2{
+    background-color: $Nav1;
+    height: 40px;
+    & h3{
+        position: relative;
+        color: $Back;
+        padding: 5px 15px;
+    }
+}
+
+.profile{
+    & img{
+    width: 30px;
+    }
+}
+
+.users table{
+    font-size: 14px;
+    padding: 15px;
+}

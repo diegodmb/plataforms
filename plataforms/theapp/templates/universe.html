@@ -1,0 +1,227 @@
+{% extends "layout.html" %}
+
+{% load static %}
+{% load humanize %}
+{% load oper %}
+
+{% block title %} Plataforms Dashboard {% endblock title %}
+{% block head %} 
+<link rel="stylesheet" href="{% static 'universe.css' %}">
+{% endblock head %}
+
+{% block body %}
+<div class="main">
+    <div class="nav1">
+        <h1>{{uni|upper}}</h1>
+        <p id="universe" style="display: none">{{uni}}</p>
+
+        <div class="data top">
+            <h4>SOCIAL VALUE</h4>
+            <h3>{{ data.sv|div:10000|intcomma}}</h3>
+        </div>
+
+        <table>
+            <thead>
+                <th></th>
+                <th>#</th>
+                <th>AVG</th>
+            </thead>
+            <tbody>
+                <tr class="imp">
+                    <td class="tit">#Tweets</td>
+                    <td class="dat">{{data.cant|intcomma}}</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="tit">Likes</td>
+                    <td class="dat">{{data.likes|div:1000000|intcomma}}M</td>
+                    <td class="dat">{{ data.likes|div:data.cant|intcomma}}</td>
+                </tr>
+                <tr class="imp">
+                    <td class="tit">Replies</td>
+                    <td class="dat">{{data.reply|div:1000|intcomma}}K</td>
+                    <td class="dat">{{ data.reply|div:data.cant|intcomma}}</td>
+                </tr>
+                <tr>
+                    <td class="tit">Retweets</td>
+                    <td class="dat">{{data.retweets|div:1000|intcomma}}K</td>
+                    <td class="dat">{{ data.retweets|div:data.cant|intcomma}}</td>
+                </tr>
+                <tr class="imp">
+                    <td class="tit">Quotes</td>
+                    <td class="dat">{{data.quotes|div:1000|intcomma}}K</td>
+                    <td class="dat">{{ data.quotes|div:data.cant|intcomma}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="trending">
+            <h3>TRENDING NOW</h3>
+        </div>
+
+    </div>
+    <div class="det">
+        <div class="frame1">
+            <div class="select">
+                <div id= "periodo" class="select1">
+                    <input type="radio" name="per" value="hoy" id="per1" />
+                    <label for="per1">Hoy</label>
+                    <input type="radio" name="per" value="sem" id="per2" />
+                    <label for="per2">Esta semana</label>
+                    <input type="radio" name="per" value="mes"id="per3" />
+                    <label for="per3">Este mes</label>
+                    <input type="radio" name="per" id="per4" value="año"checked/>
+                    <label for="per4">Este año</label>
+                </div>
+                <div id="category" class="select2">
+                    <input type="radio" name="cat" value="Todos" id="cat1" checked/>
+                    <label for="cat1">Todos</label>
+                    <input type="radio" name="cat" value="Network" id="cat2" />
+                    <label for="cat2">Network</label>
+                    <input type="radio" name="cat" value="Show" id="cat3" />
+                    <label for="cat3">Show</label>
+                    <input type="radio" name="cat" value="Influencer" id="cat4" />
+                    <label for="cat4">Influencer</label>
+                    <input type="radio" name="cat" value="Ligas" id="cat5" />
+                    <label for="cat5">Ligas</label>
+                </div>
+            </div>
+        </div>
+        <div class="groups">
+            {% for group in groups %}
+                {% if forloop.counter == 1 %}
+                <div class="group">
+                    <table>
+                        <tr>
+                            <td>
+                                <img rowspan="2" src="static/img/twitter.png" alt="Twitter Logo">
+                            </td>
+                        <tr>
+                            <th class="head hide">Ref</th>
+                        </tr>
+                        <tr>
+                            <td class="pad">SV</td>
+                        </tr>
+                        <tr>
+                            <td class="pad">#Tweets</td>
+                        </tr>
+                        <tr>
+                            <td class="pad">Likes</td>
+                        </tr>
+                        <tr>
+                            <td class="pad">Replies</td>
+                        </tr>
+                        <tr>
+                            <td class="pad">Retweets</td>
+                        </tr>
+                        <tr>
+                            <td class="pad">Quotes</td>
+                        </tr>
+                    </table>
+                </div>
+                {% endif %}
+                <div class="group">
+                    <table>
+                        <tbody>
+                            <tr colspan="3">
+                                <img src="static/img/{{group.author__group__name}}.png" alt="{{group.author__group__name}}"></img>
+                            </tr>
+                            <tr>
+                                <th class="head">#</th>
+                                <th class="head">Shr%</th>
+                                <th class="head">AVG</th>
+                            </tr>
+
+                            <tr>
+                                <td class="der">{{ group.sv|div:10000|intcomma}}</td>
+                                <td class="der">{% widthratio group.sv data.sv 100 %}%</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="der">{{group.cant|intcomma}}</td>
+                                <td class="der">{% widthratio group.cant data.cant 100 %}%</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td class="der">{{group.likes|div:1000|intcomma}}K</td>
+                                <td class="der">{% widthratio group.likes data.likes 100 %}%</td>
+                                <td class="der">{{ group.likes|div:group.cant|intcomma}}</td>
+                            </tr>
+                            <tr>
+                                <td class="der">{{group.reply|div:1000|intcomma}}K</td>
+                                <td class="der">{% widthratio group.reply data.reply 100 %}%</td>
+                                <td class="der">{{ group.reply|div:group.cant|intcomma}}</td>
+                            </tr>
+                            <tr>
+                                <td class="der">{{group.retweets|div:1000|intcomma}}K</td>
+                                <td class="der">{% widthratio group.retweets data.retweets 100 %}%</td>
+                                <td class="der">{{ group.retweets|div:group.cant|intcomma}}</td>
+                            </tr>
+                            <tr>
+                                <td class="der">{{group.quotes|div:1000|intcomma}}K</td>
+                                <td class="der">{% widthratio group.quotes data.quotes 100 %}%</td>
+                                <td class="der">{{ group.quotes|div:group.cant|intcomma}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+        {%endfor%}
+        </div>
+        <div class="frame2">
+            <h3>USERS RANK</h3>
+        </div>
+        <div class="users">
+            <table>
+                <thead>
+                    <th>#</th>
+                    <th>Group</th>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Username</th>
+                    <th>#</th>
+                    <th>%</th>
+                    <th>SV</th>
+                    <th>%</th>
+                    <th>Likes</th>
+                    <th>%</th>
+                    <th>Replies</th>
+                    <th>%</th>
+                    <th>Reteewts</th>
+                    <th>%</th>
+                    <th>Quotes</th>
+                    <th>%</th>                    
+                    <th>Category</th>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td class="profile"> <img src="static/img/{{user.author__group__name}}.png" alt="{{user.author__group__name}}"></td>
+                        <td class="profile"> <img src="{{user.author__profile_image_url}}" alt=""></td>
+                        <td>{{user.author__name}}</td>
+                        <td>{{user.author__username}}</td>
+                        <td class="der">{{user.cant}}</td>
+                        <td class="der">{% widthratio user.cant data.cant 100 %}%</td>
+                        <td class="der">{{user.sv|div:10000|intcomma}}</td>
+                        <td class="der">{% widthratio user.sv data.sv 100 %}%</td>
+                        <td class="der">{{user.likes|div:1000|intcomma}}K</td>
+                        <td class="der">{% widthratio user.likes data.likes 100 %}%</td>
+                        <td class="der">{{user.reply|div:1000|intcomma}}K</td>
+                        <td class="der">{% widthratio user.reply data.reply 100 %}%</td>
+                        <td class="der">{{user.retweets|div:1000|intcomma}}K</td>
+                        <td class="der">{% widthratio user.retweets data.retweets 100 %}%</td>
+                        <td class="der">{{user.quotes|div:1000|intcomma}}K</td>
+                        <td class="der">{% widthratio user.quotes data.quotes 100 %}%</td>
+                        <td>{{user.author__category__name}}</td>
+                    </tr>
+                        {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+<script src="{% static 'app.js' %}"></script>
+{% endblock body %}
